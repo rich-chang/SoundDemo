@@ -32,4 +32,10 @@ public class MainActivity extends AppCompatActivity {
 
         mp.pause();
     }
+
+    public void stopAudio (View view) {
+        Log.i("richc", "Press Stop");
+
+        mp.stop();
+    }
 }
