@@ -24,17 +24,17 @@ public class MainActivity extends AppCompatActivity {
         mp = MediaPlayer.create(this, R.raw.file_example_mp3_2mb);
 
         am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        int maxVolumn = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-        int curVolumn = am.getStreamVolume(AudioManager.STREAM_MUSIC);
+        int maxVolume = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        int curVolume = am.getStreamVolume(AudioManager.STREAM_MUSIC);
 
         SeekBar volumnCtrl = findViewById(R.id.volumnSeekBar);
-        volumnCtrl.setMax(maxVolumn);
-        volumnCtrl.setProgress(curVolumn);
+        volumnCtrl.setMax(maxVolume);
+        volumnCtrl.setProgress(curVolume);
 
         volumnCtrl.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                Log.i("seekbar value", Integer.toString(i));
+                Log.i("volume", Integer.toString(i));
 
                 am.setStreamVolume(AudioManager.STREAM_MUSIC, i, 0);
             }
@@ -47,6 +47,28 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
+            }
+        });
+
+
+        SeekBar scrubberCtrl = findViewById(R.id.scrubberSeekBar);
+        scrubberCtrl.setMax(mp.getDuration());
+        scrubberCtrl.setProgress(0);
+
+        scrubberCtrl.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                Log.i("scrubber", Integer.toString(i));
+
+                mp.seekTo(i);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
     }
