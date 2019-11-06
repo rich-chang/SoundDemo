@@ -11,6 +11,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MainActivity extends AppCompatActivity {
 
     MediaPlayer mp;
@@ -51,9 +54,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        SeekBar scrubberCtrl = findViewById(R.id.scrubberSeekBar);
+        final SeekBar scrubberCtrl = findViewById(R.id.scrubberSeekBar);
         scrubberCtrl.setMax(mp.getDuration());
         scrubberCtrl.setProgress(0);
+
+        /*
+        // Timer
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+               scrubberCtrl.setProgress(mp.getCurrentPosition());
+            }
+        }, 0, 3000);
+        */
 
         scrubberCtrl.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
