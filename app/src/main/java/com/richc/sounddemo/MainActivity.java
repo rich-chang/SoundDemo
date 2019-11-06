@@ -11,6 +11,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MainActivity extends AppCompatActivity {
 
     MediaPlayer mp;
@@ -24,17 +27,17 @@ public class MainActivity extends AppCompatActivity {
         mp = MediaPlayer.create(this, R.raw.file_example_mp3_2mb);
 
         am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        int maxVolumn = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-        int curVolumn = am.getStreamVolume(AudioManager.STREAM_MUSIC);
+        int maxVolume = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        int curVolume = am.getStreamVolume(AudioManager.STREAM_MUSIC);
 
         SeekBar volumnCtrl = findViewById(R.id.volumnSeekBar);
-        volumnCtrl.setMax(maxVolumn);
-        volumnCtrl.setProgress(curVolumn);
+        volumnCtrl.setMax(maxVolume);
+        volumnCtrl.setProgress(curVolume);
 
         volumnCtrl.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                Log.i("seekbar value", Integer.toString(i));
+                Log.i("volume", Integer.toString(i));
 
                 am.setStreamVolume(AudioManager.STREAM_MUSIC, i, 0);
             }
@@ -47,6 +50,38 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
+            }
+        });
+
+
+        final SeekBar scrubberCtrl = findViewById(R.id.scrubberSeekBar);
+        scrubberCtrl.setMax(mp.getDuration());
+        scrubberCtrl.setProgress(0);
+
+        /*
+        // Timer
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+               scrubberCtrl.setProgress(mp.getCurrentPosition());
+            }
+        }, 0, 3000);
+        */
+
+        scrubberCtrl.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                Log.i("scrubber", Integer.toString(i));
+
+                mp.seekTo(i);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
     }
