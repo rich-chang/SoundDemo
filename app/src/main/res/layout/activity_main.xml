@@ -44,8 +44,8 @@
         android:id="@+id/volumnSeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="230dp"
-        android:layout_marginBottom="94dp"
+        android:layout_marginTop="160dp"
+        android:layout_marginBottom="164dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
