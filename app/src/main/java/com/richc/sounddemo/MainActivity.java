@@ -53,6 +53,6 @@ public class MainActivity extends AppCompatActivity {
     public void stopAudio (View view) {
         Log.i("richc", "Press Stop");
 
-        mp.stop();
+        //mp.stop();
     }
 }
